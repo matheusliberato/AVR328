@@ -1,0 +1,62 @@
+<html>	
+	<head>
+	<link type="text/css" rel="stylesheet" href="estilo.css">
+		<title>Emulador AVR328 v.Alpha 1.1</title>
+	</head>
+	<body>
+		<div id="todo">
+		<h2>Avisos</h2>
+		
+		<p>Este projeto est&eacute; em desenvolvimento! Então, nem todos os recursos estão implementados!</p>
+		<p>Caso o emulador apresente algum 'BUG', por favor, enviar o problema para <a href=mailto:"victorcarlquist@gmail.com">Victor Carlquist</a> ou <a href=mailto:"matheusliberatosbs@gmail.com">Matheus Liberato</a>.</p>
+		<p>O emulador ainda não suporta números em formato hexadecimal e em formato binário!</p>
+		<p>Segue a lista dos Comandos Implementados:
+		.ORG
+		ADD
+		ADC
+		ADWI
+		ASR
+		LDI
+		CPI
+		CP
+		BRGE
+		BREQ
+		BRLT
+		BRSH
+		BRCC
+		BRLO
+		BRCS
+		BRMI
+		BRVS
+		BRNE
+		MOV
+		NEG
+		ST
+		STS
+		LD
+		LDS
+		BRPL
+		BRVC
+		JMP
+	</p>
+	<p>
+	Exemplo de código:<br />
+	LDI R16,5<br />
+	CPI R16,4<br />
+	BRGE PULA    ;verifica se R16 >= 4<br />
+	LDI R18,55<br />
+
+	PULA:<br />
+	LDI R20,5<br />
+	</p>
+	
+	<p> O rotulo nao pode ser declarado na mesma linha da instrucao, como demostrado no exemplo acima. </p>
+	<p>Obrigado!</p>
+	<p>Este emulador foi desenvolvido por Matheus Liberato e Victor Carlquist.</p>
+			
+			<a href="index.html">Voltar!</a>
+		</div>
+		
+		
+	</body>
+</html>
