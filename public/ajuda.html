@@ -5,12 +5,37 @@
 	</head>
 	<body>
 		<div id="todo">
-		<h2>Avis ds ds os Importantes! i </h2>
+		<h2>Avisos Importantes! </h2>
 		
-		<p>Este projeto est&eacute; em desenvolvimento! Então, nem todos os recursos estão implementados!</p>
+		<p> Este projeto visa <u>AUXILIAR</u> o aprendizado de linguagem assembly para os alunos do curso TADS na disciplina de
+		    Arquitetura de Computadores. </p>
+
+		<p>Este projeto encontra-se em fase de desenvolvimento, portanto nem todos os recursos estão implementados!</p>
+
 		<p>Caso o emulador apresente algum 'BUG', por favor, enviar o problema para <a href=mailto:victorcarlquist@gmail.com>Victor Carlquist</a> ou <a href=mailto:matheusliberatosbs@gmail.com>Matheus Liberato</a>.</p>
-		<p>O emulador ainda não suporta números em formato hexadecimal e em formato binário!</p>
-		<p>Segue a lista dos Comandos Implementados:
+				
+		<p><h2> Observa&ccedil;&otilde;es </h2></p>
+		
+		<ul>
+			<li><p> O emulador ainda não suporta números em formato hexadecimal e em formato binário;</p></li>
+			<li><p> O Rotulo n&atilde;o deve ser informado na mesma linha que a instru&ccedil;&atilde;o;</p></li>
+		</ul>
+			
+		<ul><p>
+			Exemplo de código:<br />
+			LDI R16,5<br />
+			CPI R16,4<br />
+			BRGE PULA    ;verifica se R16 >= 4<br />
+			LDI R18,55<br />
+
+			PULA:<br />
+			LDI R20,5<br />
+		</p></ul>
+
+		<br />
+
+		<p><h2> Lista dos Comandos Implementados:</h2></p>
+		
 		.ORG
 		ADD
 		ADC
@@ -38,25 +63,13 @@
 		BRPL
 		BRVC
 		JMP
+	 
 	</p>
-	<p>
-	Exemplo de código:<br />
-	LDI R16,5<br />
-	CPI R16,4<br />
-	BRGE PULA    ;verifica se R16 >= 4<br />
-	LDI R18,55<br />
 
-	PULA:<br />
-	LDI R20,5<br />
-	</p>
-	
-	<p> O rotulo nao pode ser declarado na mesma linha da instrucao, como demostrado no exemplo acima. </p>
 	<p>Obrigado!</p>
 	<p>Este emulador foi desenvolvido por Matheus Liberato e Victor Carlquist.</p>
 			
 			<a href="index.html">Voltar!</a>
 		</div>
-		
-		
 	</body>
 </html>
