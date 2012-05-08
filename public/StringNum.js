@@ -415,7 +415,7 @@ function ADIW(s){
 		if(parseInt(imediato)>63 || parseInt(imediato)<0)
 			return false;
 		//Concatena os dois registradores para formar um par.
-		var nr = AVR328.R[d1] + AVR328.R[d];
+		var nr = DecToBin(AVR328.R[d1]) + DecToBin(AVR328.R[d]);
 		
 		//Converte o numero Informado para binario.
 		var binImediato = DecToBin(imediato,16);
