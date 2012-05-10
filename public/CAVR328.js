@@ -633,6 +633,22 @@ classeteste.prototype.Command = function(s,tipo) //s = Rd,Rr
 {
 	if (ADIW(s)) // Valida os parametros do comando
 	{
+		var p 	= RegExp(/(([x-z]|[X-Z]))+,+((\d)|(\d\d))/);
+		
+		//Verifica
+		if (p.test(s))
+		{
+			//Substitui os ponteiros de XYZ pelo
+			//nome de cada registrador.
+			if(s.substring(0,1) == "X")
+				s = s.replace("X","R27:R26");
+			else if (s.substring(0,1) == "Y")
+				s = s.replace("Y","R29:R28");
+			else if(s.substring(0,1) == "Z")
+				s = s.replace("Z","R31:R30");
+		}
+		else
+			
 		if(s.substring(0,5) == "XH:XL")
 			s = s.replace("XH:XL","R27:R26");
 		else if(s.substring(0,5) == "YH:YL")
