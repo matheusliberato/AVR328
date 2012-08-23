@@ -9,11 +9,15 @@
 			var MEMORIA = new Array(4096);
 			var END = 0;
 			var LINHA = 0;
-			var EXECUTAR = false; //	VARIAVEL DIZ SE O EMULADOR ESTA EXECUTANDO O CODIDO, PARA IMPEDIR QUE ELE ADICIONE OS OPCODES NOVAMENTE
+			var EXECUTAR = false; //VARIAVEL DIZ SE O EMULADOR ESTA EXECUTANDO O CODIDO, PARA IMPEDIR QUE ELE ADICIONE OS OPCODES NOVAMENTE
 			var MONTAGEM_OK;
 			for(var i=0;i<32;i++)
 				AVR328.R[i] = 0;
-			function AtualizaDados()
+				
+			/**
+			* Atualiza os valores dos registradores na interface
+			*/
+			function AtualizaDados() 
 			{
 				var flags = document.getElementById("Flag");
 				var ns = "";
@@ -40,6 +44,10 @@
 				flags.innerHTML = ns;
 				
 			}
+			/**
+			* Modifica o texto da div 'opcode', para limpar a div basta enviar '""'
+			* @param {string} Binarios das intruções
+			*/
 			function ConsoleBin(s)
 			{
 				var CampoOpCODE = document.getElementById("opcode");
@@ -50,6 +58,10 @@
 				else
 					CampoOpCODE.value = s;
 			}
+			/**
+			* Modifica o texto da div 'erros', para limpar a div basta enviar '""'
+			* @param {string} um erro
+			*/
 			function ConsoleBinErro(s)
 			{
 				var CampoOpCODE = document.getElementById("erros");
@@ -60,6 +72,10 @@
 				else
 					CampoOpCODE.value = s;
 			}
+			/**
+			* Insere um byte na memória em Binario
+			* @param {string}
+			*/
 			function InsereMemoria(s)
 			{
 				if(!EXECUTAR)
@@ -89,6 +105,10 @@
 					}
 				}
 			}
+			/**
+			* Mostra o conteúdo da variável MEMÓRIA na interface
+			* @see ConsoleBin() 
+			*/
 			function MostraMemoria()
 			{
 				ConsoleBin("");
@@ -103,8 +123,10 @@
 						
 				ConsoleBin(s);
 			}
-			//tipo = 0,inicializa TUDO
-			//tipo = 1,inicializa o processador, não a memória
+			/**
+			* Inicializa a interface, processador e/ou memória
+			* @param {integer} tipo = 0(inicializa TUDO);tipo = 1(inicializa o processador, não a memória)
+			*/
 			function inicializa(tipo)
 			{
 				
@@ -133,7 +155,9 @@
 					document.getElementById("btn_Frente").disabled = true;
 				}
 			}
-			
+			/**
+			* Converte os mnemonicos em opcodes, alterando memória , verifica a sintaxe
+			*/
 			function Montar()
 			{
 				linhas();
@@ -219,6 +243,9 @@
 				inicializa(1); // Limpa o estado do processador, pois esta função é apenas para gerar os opcodes.
 				
 			}		
+			/**
+			* Executa o código que foi montado
+			*/
 			function Executar()
 			{
 				ConsoleBinErro("");
@@ -286,6 +313,9 @@
 				}
 				EXECUTAR = false;
 			}		
+			/**
+			*Executa o código linha por linha
+			*/
 			function Passo()
 			{
 				//ConsoleBinErro("");
@@ -353,6 +383,9 @@
 				document.getElementById("linha").value = "Linha: " +AVR328.PC;
 				linhas(AVR328.PC);
 			}		
+			/**
+			* Gera o numero das linhas e destaca a linha em execução
+			*/
 			function linhas(l)
 			{
 				var ns="";

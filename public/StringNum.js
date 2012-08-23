@@ -1,4 +1,8 @@
-//Inverte uma string
+/**
+* Inverte uma string
+* @param {string}
+* @return {string}
+*/
 function Reverse (s)
 {	
 	var ns = "";
@@ -7,6 +11,11 @@ function Reverse (s)
 	
 	return ns;
 }
+/**
+* Coloca um espaço a casa 4 bits(caracteres) 
+* @param {string} 
+* @return {string}
+*/
 function ColocaEspaco(s)
 {
 	var i=1;
@@ -14,7 +23,13 @@ function ColocaEspaco(s)
 	return ns;
 	
 }
-//Converte de decimal para binario
+/**
+* Converte de decimal para binario
+* @param {integer} valor, decimal
+* @param {integer} bits, numero de bits de retorno (default 8)
+* @param {boolean} espaco, se verdadeiro coloca espaço a cada 4 bits
+* @return {string}
+*/
 function DecToBin(valor,bits,espaco) //valor = dec e bits = 8 // espaço(bool) entre 4 bits //
 {
 	if(!bits) bits =8;
@@ -38,6 +53,12 @@ function DecToBin(valor,bits,espaco) //valor = dec e bits = 8 // espaço(bool) e
 		resto = ColocaEspaco(resto);
 	return resto;
 }
+/**
+* Converte de binario para decimal
+* @param {string} s, valor em binario
+* @return {integer}
+*/
+
 function BinToDec(s)
 {
 	var ind = s.length-1;
@@ -50,17 +71,32 @@ function BinToDec(s)
 	return dec;
 }
 
-//Tira os espaços iniciais e finais de uma string
+
+/**
+* Tira os espaços iniciais e finais de uma string
+* @param {string}
+* @return {string}
+*/
 function Trim(str){return str.replace(/^\s+|\s+$/g,"");}
+/**
+* Tira os todos espaços de uma string
+* @param {string}
+* @return {string}
+*/
 function TrimAll(str){return str.replace(/\s/g,'');}
 
-//Verifica se os parametros de uma função estão corretas
-//Rd com Rd = 0
-//Rd com KK = 1
-//Rd		= 2
-//KK com Rd = 3
-//X,Rd      = 4
-//Rd,X		= 5
+/**
+* Verifica se os parametros de uma função estão corretas
+* @param {string}, parametros da instrução
+* @param {type},
+* Rd com Rd = 0
+* Rd com KK = 1
+* Rd		= 2
+* KK com Rd = 3
+* [X-Z],Rd  = 4
+* Rd,[X-Z]  = 5
+* @return {boolean}
+*/
 function ValidateInput(s,type) //s = <parametros do comando>, type = num
 {
 	var RtoR = RegExp(/((R+(\d))|(R+(\d\d)))+,+(R+(\d)|R+(\d\d))/);
@@ -187,8 +223,18 @@ function ValidateInput(s,type) //s = <parametros do comando>, type = num
 
 	return false;
 }
-//Substitui os 'k' e os 'd' pelos binario da instrução
-function CreateOpcode(fs,d,k,kb,r,nd,nr) // fs = padrao do opcode ex = 1111 dddd kkkk dddd,d = numero do Rd em dec, [k = valor imediato],[b = numero de bits do k],[r = numero do Rr em dec],[nd = numero de bits de d],[nr = numero de bits de r]
+/**
+* Substitui os 'k' e os 'd' pelos binario da instrução
+* @param {string} fs: padrao do opcode; exemplo: 1111 dddd kkkk dddd
+* @param {integer} d: numero do Rd em dec
+* @param {integer} [k: valor imediato]
+* @param {integer} [kb: numero de bits que se quer gerar a partir do valor de k]
+* @param {integer} [r:  numero do Rr em dec]
+* @param {integer} [nd: numero de bits que se quer gerar a partir do valor de d]
+* @param {integer} [nr = numero de bits que se quer gerar a partir do valor de r]
+* @return {string}
+*/
+function CreateOpcode(fs,d,k,kb,r,nd,nr)
 {
 	if(!nd)	nd = 4;
 	if(!nr)	nr = 4;
@@ -225,7 +271,11 @@ function CreateOpcode(fs,d,k,kb,r,nd,nr) // fs = padrao do opcode ex = 1111 dddd
 	}
 	return ns;
 }
-//Pega o numero do Registrador na instrução
+/**
+* Pega o numero do primeiro Registrador na instrução
+* @param {string} parametro de uma instrução
+* @return {integer}
+*/
 function GetDReg(s)
 {
 	if(s.substr(2,1) == ',')
@@ -233,7 +283,11 @@ function GetDReg(s)
 	else
 		return parseInt(s.substr(1,2));
 }
-//Pega o numero do Segundo Registrador na instrução
+/**
+* Pega o numero do segundo Registrador na instrução
+* @param {string} parametro de uma instrução
+* @return {integer}
+*/
 function GetDReg2(s)
 {
 	if(s.substr(2,1) == ',')
@@ -241,7 +295,11 @@ function GetDReg2(s)
 	else
 		return parseInt(s.substr(5));
 }
-//Pega o numero imediato na instrução
+/**
+* Pega o valor imediato na instrução
+* @param {string} parametro de uma instrução
+* @return {integer}
+*/
 function GetK(s)
 {
 	if(s.substr(2,1) == ',')
@@ -251,11 +309,9 @@ function GetK(s)
 }
 //Estrutura dos dados do AVR328
 
-/*
- *
- *
- *
- */
+/**
+
+*/
 
 function negacao(item){
 		var str = "";
