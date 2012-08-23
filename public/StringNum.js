@@ -87,17 +87,17 @@ function TrimAll(str){return str.replace(/\s/g,'');}
 
 /**
 * Verifica se os parametros de uma função estão corretas
-* @param {string}, parametros da instrução
-* @param {type},
-* Rd com Rd = 0
-* Rd com KK = 1
-* Rd		= 2
-* KK com Rd = 3
-* [X-Z],Rd  = 4
-* Rd,[X-Z]  = 5
+* @param {string} s parametros da instrução
+* @param {integer} type
+* Rd com Rd = 0 <br />
+* Rd com KK = 1 <br />
+* Rd		= 2 <br />
+* KK com Rd = 3 <br />
+* [X-Z],Rd  = 4 <br />
+* Rd,[X-Z]  = 5 
 * @return {boolean}
 */
-function ValidateInput(s,type) //s = <parametros do comando>, type = num
+function ValidateInput(s,type)
 {
 	var RtoR = RegExp(/((R+(\d))|(R+(\d\d)))+,+(R+(\d)|R+(\d\d))/);
 	var RtoK = RegExp(/((R+(\d))|(R+(\d\d)))+,+((\d)|-(\d))/);
