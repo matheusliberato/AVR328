@@ -307,8 +307,7 @@ function Executar()
 	while(AVR328.PC < CODE.length)
 	{
 		
-		//******************************************************************
-		//****************************Normaliza Comando*********************
+		
 		var c = CODE[AVR328.PC].toUpperCase();//separa a instrução do parametros
 		var part = Normalizar(c);
 		
@@ -365,61 +364,51 @@ function Passo()
 	//ConsoleBinErro("");
 	EXECUTAR = true;
 	//inicializa(1);
-	//******************************************************************
-	//****************************Normaliza Comando*********************
-	var c = CODE[AVR328.PC].toUpperCase();//separa a instrução do parametros
-	// part[0] está com CCC Rd,KK
+
 	//Este laço deixa com 1 espaço entre o CCC e Rd. Ex: LDI      R10,10 ->após o laço-> LDI R10,10
-	var i =0;
-	do{
-		if(c.substr(i,1) == ' ')
-		{
+	var c = CODE[AVR328.PC].toUpperCase();//separa a instrução do parametros
+	var part = Normalizar(c);
 		
-			if(c.substr(i+1,1) == ' ')
-			{
-				c = c.substring(0,i+1) + c.substring(i+2); 
-				
-			}else
-				break;
-		}
-		else
-			i++;
-	}while(i < c.length);
-	var part = new Array(2);
-	part[0] = c.substring(0,i);
-	part[1] = c.substring(i+1);
-	//***************************Fim da Normalização********************
-	//******************************************************************
-	
 	//se for uma label, pula para proxima linha 
-	if(part[0].indexOf(":") >= 0 || part[0]=="")
-		AVR328.PC++;
-	else
-	{
-		var encontrado = false;
-		for(var i in AVR328.Commands)
+		var isLabelOnly = false;
+		if(part[0].indexOf(":") >= 0 || part[0]=="")
 		{
-			if(AVR328.Commands[i].asm.toUpperCase() == part[0]) //Pesquisa o comando
+			if(part[1] != "") // se true: existe uma instrucao na frente da label
 			{
-				if(AVR328.Commands[i].Command(TrimAll(part[1]),1) == 1) // Chama a ação do comando passando os parametros do comando
-				{
-					ConsoleBinErro("Erro na linha "+ (parseInt(AVR328.PC)+1));
-					AVR328.PC++;
-					break;
-					
-				}
-				encontrado = true;
-				MostraMemoria();
-				MostraMemoriaDados();
-				AtualizaDados();
-				break;
+				part = Normalizar(part[1]);
 			}
-				
-		}
-		if(!encontrado)
+			else
+			{
+				AVR328.PC++;
+				isLabelOnly = true;
+			}
+		}	
+		if(!isLabelOnly)
 		{
-			ConsoleBinErro("Instrucao desconhecida! Linha:"+ (parseInt(AVR328.PC)+1));
-		}
+			var encontrado = false;
+			for(var i in AVR328.Commands)
+			{
+				if(AVR328.Commands[i].asm.toUpperCase() == part[0]) //Pesquisa o comando
+				{
+					if(AVR328.Commands[i].Command(TrimAll(part[1]),1) == 1) // Chama a ação do comando passando os parametros do comando
+					{
+						ConsoleBinErro("Erro na linha "+ (parseInt(AVR328.PC)+1));
+						AVR328.PC++;
+						break;
+					
+					}
+					encontrado = true;
+					MostraMemoria();
+					MostraMemoriaDados();
+					AtualizaDados();
+					break;
+				}
+				
+			}
+			if(!encontrado)
+			{
+				ConsoleBinErro("Instrucao desconhecida! Linha:"+ (parseInt(AVR328.PC)+1));
+			}
 	
 	}
 	if((AVR328.PC) >= CODE.length)
@@ -438,7 +427,7 @@ function linhas(l)
 		l=0;
 	for(var i=1;i<100;i++)
 	{
-		if(l==i)
+		if(l==i-1)
 		{
 			ns+="<span style='color:white;background-color:black;'>"+i+"</span><br />";
 		}else
