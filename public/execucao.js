@@ -147,6 +147,38 @@ function inicializa(tipo)
 	}
 }
 /**
+* Normaliza o comando
+* @param c instrucao 
+* @return {array} 0 comando , 1 parametro 
+*/
+function Normalizar(c)
+{
+
+	//Este laço deixa com 1 espaço entre o CCC e Rd. Ex: LDI      R10,10 ->após o laço-> LDI R10,10
+	var i =0;
+	do{
+		if(c.substr(i,1) == ' ')
+		{
+		
+			if(c.substr(i+1,1) == ' ')
+			{
+				c = c.substring(0,i+1) + c.substring(i+2); 
+				
+			}else
+				break;
+		}
+		else
+			i++;
+	}while(i < c.length);
+	
+	var part = Array(2);
+	part[0] = c.substring(0,i);
+	part[1] = c.substring(i+1);  
+	return part;
+
+}
+
+/**
 * Converte os mnemonicos em opcodes, alterando memória , verifica a sintaxe
 */
 function Montar()
@@ -169,36 +201,28 @@ function Montar()
 		CODE[LINHA] = Trim(CODE[LINHA]) // tira espaços iniciais e finais do comando
 		var CodSemComentario = CODE[LINHA].split(";");
 		CODE[LINHA] = CodSemComentario[0];
-		//******************************************************************
-		//****************************Normaliza Comando*********************
-		var c = CODE[LINHA].toUpperCase();//separa a instrução do parametros
-		// part[0] está com CCC Rd,KK
-		//Este laço deixa com 1 espaço entre o CCC e Rd. Ex: LDI      R10,10 ->após o laço-> LDI R10,10
-		var i =0;
-		do{
-			if(c.substr(i,1) == ' ')
+		
+		var c = CODE[LINHA].toUpperCase();//pega a instrução
+		var part = Normalizar(c);
+		
+		
+		//se for uma label, 
+		//pula para proxima linha se tiver espaço em branco
+		var isLabelOnly = false; // se existir uma label, ira verificar se há um comando na mesma linha
+		if(part[0].indexOf(":") >= 0 || part[0]=="")
+		{
+			if(part[1] != "") // se true: existe uma instrucao na frente da label
 			{
-			
-				if(c.substr(i+1,1) == ' ')
-				{
-					c = c.substring(0,i+1) + c.substring(i+2); 
-					
-				}else
-					break;
+				part = Normalizar(part[1]);
 			}
 			else
-				i++;
-		}while(i < c.length);
-		var part = new Array(2);
-		part[0] = c.substring(0,i);
-		part[1] = c.substring(i+1);
-		//***************************Fim da Normalização********************
-		//******************************************************************
-		
-		//se for uma label, pula para proxima linha 
-		if(part[0].indexOf(":") >= 0 || part[0]=="")
-			LINHA++;
-		else{
+			{
+				LINHA++;
+				isLabelOnly = true;
+			}
+		}	
+		if(!isLabelOnly)
+		{
 			var encontrado = false;
 			for(var i in AVR328.Commands)
 			{
@@ -221,7 +245,7 @@ function Montar()
 			if(!encontrado)
 			{
 				MONTAGEM_OK = false;
-				ConsoleBinErro("Instrucao desconhecida! Linha:"+ (parseInt(LINHA)+1));
+				ConsoleBinErro("Instrucao desconhecida! Linha:"+ (parseInt(LINHA)+1)+part[1]);
 				break;
 			}
 		
@@ -229,6 +253,7 @@ function Montar()
 			LINHA++;
 			
 		}
+		
 	}
 	
 	inicializa(1); // Limpa o estado do processador, pois esta função é apenas para gerar os opcodes.
@@ -248,33 +273,23 @@ function Executar()
 		//******************************************************************
 		//****************************Normaliza Comando*********************
 		var c = CODE[AVR328.PC].toUpperCase();//separa a instrução do parametros
-		// part[0] está com CCC Rd,KK
-		//Este laço deixa com 1 espaço entre o CCC e Rd. Ex: LDI      R10,10 ->após o laço-> LDI R10,10
-		var i =0;
-		do{
-			if(c.substr(i,1) == ' ')
-			{
-			
-				if(c.substr(i+1,1) == ' ')
-				{
-					c = c.substring(0,i+1) + c.substring(i+2); 
-					
-				}else
-					break;
-			}
-			else
-				i++;
-		}while(i < c.length);
-		var part = new Array(2);
-		part[0] = c.substring(0,i);
-		part[1] = c.substring(i+1);
-		//***************************Fim da Normalização********************
-		//******************************************************************
+		var part = Normalizar(c);
 		
 		//se for uma label, pula para proxima linha 
+		var isLabelOnly = false;
 		if(part[0].indexOf(":") >= 0 || part[0]=="")
-			AVR328.PC++;
-		else
+		{
+			if(part[1] != "") // se true: existe uma instrucao na frente da label
+			{
+				part = Normalizar(part[1]);
+			}
+			else
+			{
+				AVR328.PC++;
+				isLabelOnly = true;
+			}
+		}	
+		if(!isLabelOnly)
 		{
 			var encontrado = false;
 			for(var i in AVR328.Commands)
