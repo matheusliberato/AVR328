@@ -784,7 +784,7 @@ classeteste.prototype.Command = function(s,tipo) //s = Rd
 		var k = ss[0];
 		var d = GetDReg(ss[1]);
 		if(tipo == 1)
-			MEMORIA[k] = DecToBin(AVR328.R[d],8,true);
+			MEMORIA_DADOS[k] = DecToBin(AVR328.R[d],8,true);
 		InsereMemoria(CreateOpcode(this.opcode,d,k,16,0,5));
 		AVR328.PC++;
 		return 0;
@@ -815,7 +815,7 @@ classeteste.prototype.Command = function(s,tipo) //s = Rd
 		var d = GetDReg(s);
 		var k = GetK(s);
 		if(tipo == 1)
-			AVR328.R[d]=BinToDec(TrimAll(MEMORIA[k]));
+			AVR328.R[d]=BinToDec(TrimAll(MEMORIA_DADOS[k]));
 		InsereMemoria(CreateOpcode(this.opcode,d,k,16,0,5));
 		AVR328.PC++;
 		return 0;
@@ -876,7 +876,7 @@ classeteste.prototype.Command = function(s,tipo) //s = Rd
 		var bin = DecToBin(AVR328.R[d1]) + DecToBin(AVR328.R[d0]);
 		var dec = BinToDec(bin);
 		if(tipo == 1)
-			MEMORIA[dec] = DecToBin(AVR328.R[r],8,true);
+			MEMORIA_DADOS[dec] = DecToBin(AVR328.R[r],8,true);
 		InsereMemoria(CreateOpcode(this.opcode,0,0,0,r,0,5));
 		AVR328.PC++;
 		return 0;
@@ -940,7 +940,7 @@ classeteste.prototype.Command = function(s,tipo) //s = Rd
 		var bin = DecToBin(AVR328.R[r1]) + DecToBin(AVR328.R[r0]);
 		var dec = BinToDec(bin);
 		if(tipo == 1)
-			AVR328.R[d] = BinToDec(TrimAll(MEMORIA[dec]));
+			AVR328.R[d] = BinToDec(TrimAll(MEMORIA_DADOS[dec]));
 		InsereMemoria(CreateOpcode(this.opcode,d,0,0,0,5));
 		AVR328.PC++;
 		return 0;

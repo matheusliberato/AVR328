@@ -1,5 +1,6 @@
 var CODE; 
 var MEMORIA = new Array(4096);
+var MEMORIA_DADOS = new Array(4096);
 var END = 0;
 var LINHA = 0;
 var EXECUTAR = false; //VARIAVEL DIZ SE O EMULADOR ESTA EXECUTANDO O CODIDO, PARA IMPEDIR QUE ELE ADICIONE OS OPCODES NOVAMENTE
@@ -42,6 +43,20 @@ function AtualizaDados()
 function ConsoleBin(s)
 {
 	var CampoOpCODE = document.getElementById("opcode");
+	if(s != "")
+	{
+		CampoOpCODE.value = s+"\n";
+	}
+	else
+		CampoOpCODE.value = s;
+}
+/**
+* Modifica o texto da div 'dados', para limpar a div basta enviar '""'
+* @param {string} Binarios das variaveis
+*/
+function ConsoleBinDados(s)
+{
+	var CampoOpCODE = document.getElementById("dados");
 	if(s != "")
 	{
 		CampoOpCODE.value = s+"\n";
@@ -115,6 +130,24 @@ function MostraMemoria()
 	ConsoleBin(s);
 }
 /**
+* Mostra o conteúdo da variável MEMÓRIA_DADOS na interface
+* @see ConsoleBinDados() 
+*/
+function MostraMemoriaDados()
+{
+	ConsoleBinDados("");
+	var s = "";
+	for(var i=0;i<4096;i++)
+		if(i<16)
+			s += "0x00"+i.toString(16)+": "+MEMORIA_DADOS[i]+'\n';
+		else if(i>=16 && i<256)
+				s += "0x0"+i.toString(16)+": "+MEMORIA_DADOS[i]+'\n';
+			 else
+				s += "0x"+i.toString(16)+": "+MEMORIA_DADOS[i]+'\n';
+			
+	ConsoleBinDados(s);
+}
+/**
 * Inicializa a interface, processador e/ou memória
 * @param {integer} tipo = 0(inicializa TUDO);tipo = 1(inicializa o processador, não a memória)
 */
@@ -130,7 +163,10 @@ function inicializa(tipo)
 	{
 		ConsoleBin("");
 		for(var i=0;i<4096;i++)
+		{
 			MEMORIA[i] = "0000 0000";
+			MEMORIA_DADOS[i] = "0000 0000";
+		}
 	}
 	END = 0;
 	AtualizaDados();
@@ -237,6 +273,7 @@ function Montar()
 					}
 					
 					MostraMemoria();
+					MostraMemoriaDados();
 					AtualizaDados();
 					break;
 				}
@@ -245,7 +282,7 @@ function Montar()
 			if(!encontrado)
 			{
 				MONTAGEM_OK = false;
-				ConsoleBinErro("Instrucao desconhecida! Linha:"+ (parseInt(LINHA)+1)+part[1]);
+				ConsoleBinErro("Instrucao desconhecida! Linha:"+ (parseInt(LINHA)+1)+" : "+part[0]);
 				break;
 			}
 		
@@ -303,6 +340,7 @@ function Executar()
 					}
 					encontrado = true;
 					MostraMemoria();
+					MostraMemoriaDados();
 					AtualizaDados();
 					break;
 				}
@@ -372,6 +410,7 @@ function Passo()
 				}
 				encontrado = true;
 				MostraMemoria();
+				MostraMemoriaDados();
 				AtualizaDados();
 				break;
 			}
