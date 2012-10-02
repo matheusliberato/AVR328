@@ -14,13 +14,14 @@
 		            var face1 = document.getElementById("face1");
 		            var face2 = document.getElementById("face2");
 		            face1.style.webkitTransform = "translateZ(-300px)";
+		            face1.style.MozTransform = "translateZ(-300px)";
 		            face1.style.opacity = 0;
 		            
 		            setTimeout(
 		                function ()
 		                {
 		                    cubo.style.webkitTransform = "rotateX(-90deg)";
-		                    
+		                    cubo.style.MozTransform = "rotateX(-90deg)";
 		                    face2.style.opacity = 1;
 		                },1000
 		            )
@@ -31,12 +32,14 @@
 		            var face2 = document.getElementById("face2");
 		            face2.style.opacity = 0;
 		            cubo.style.webkitTransform = "rotateX(0deg)";
+		            cubo.style.MozTransform = "rotateX(0deg)";
 		            
 		            
 		            setTimeout(
 		                function ()
 		                {
 		                    face1.style.webkitTransform = "translateZ(0px)";
+		                    face1.style.MozTransform = "translateZ(0px)";
 		                    face1.style.opacity = 1;
 		                },1000
 		            )
