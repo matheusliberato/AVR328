@@ -15,6 +15,36 @@ CAVR328 = function (AVR328)
 var AVR328 = new CAVR328;
 
 //*********************************************
+//***Comando ALAN_TURING ******************************
+//*********************************************
+var classeteste = function()
+{
+	//Carrega um valor imediato
+	this.asm = "ALAN_TURING";
+	// 			 1110 kkkk dddd kkkk
+	this.opcode="==== ALAN *100 anos"; //tudo em caixa baixa!
+}
+classeteste.prototype.Command = function(s,tipo) //s = Rd,kk
+{
+
+	var s = "ALAN TURING PARABENS 100 ANOS  ";
+	for(var i=0;i<s.length;i++)
+	    AVR328.R[i] = s[i];
+
+    gira();
+	//o this.opcode é o "1110 kkkk dddd kkkk", depois é passado o numedo de 'd', e valor de k, e quantos bits são o k, que neste caso é 8bits
+	InsereMemoria(this.opcode);
+	AVR328.PC++;
+
+	return 0;
+}
+AVR328.Commands.push(new classeteste());
+//*********************************************
+//***FIM ALAN_TURING******************************
+//*********************************************
+
+
+//*********************************************
 //***Comando LDI ******************************
 //*********************************************
 var classeteste = function()
@@ -952,5 +982,74 @@ classeteste.prototype.Command = function(s,tipo) //s = Rd
 AVR328.Commands.push(new classeteste());
 //*********************************************
 //***FIM LD ******************************
+//*********************************************
+
+//*********************************************
+//***Comando INC ******************************
+//*********************************************
+var classeteste = function()
+{
+	//Incrementa um registrador
+	this.asm = "INC";
+	// 			 1110 kkkk dddd kkkk
+	this.opcode="1001 010d dddd 0011"; //tudo em caixa baixa!
+}
+classeteste.prototype.Command = function(s,tipo) //s = Rd
+{
+	if (ValidateInput(s,2)) // Valida os parametros do comando
+	{
+		var d = GetDReg(s);
+		
+		AVR328.R[d]++;
+
+		AfetaFlag(AVR328.R[d]);
+		//o this.opcode é o "1110 kkkk dddd kkkk", depois é passado o numedo de 'd', e valor de k, e quantos bits são o k, que neste caso é 8bits
+		InsereMemoria(CreateOpcode(this.opcode,d,0,0,5));
+
+		AVR328.PC++;
+
+		return 0;
+	}else
+	{
+		return 1;
+	}	
+}
+AVR328.Commands.push(new classeteste());
+//*********************************************
+//***FIM INC ******************************
+//*********************************************
+
+//*********************************************
+//***Comando DEC ******************************
+//*********************************************
+var classeteste = function()
+{
+	//Decrementa um registrador
+	this.asm = "DEC";
+	// 			 1110 kkkk dddd kkkk
+	this.opcode="1001 010d dddd 1010"; //tudo em caixa baixa!
+}
+classeteste.prototype.Command = function(s,tipo) //s = Rd
+{
+	if (ValidateInput(s,2)) // Valida os parametros do comando
+	{
+		var d = GetDReg(s);
+		
+		AVR328.R[d]--;
+        AfetaFlag(AVR328.R[d]);
+		//o this.opcode é o "1110 kkkk dddd kkkk", depois é passado o numedo de 'd', e valor de k, e quantos bits são o k, que neste caso é 8bits
+		InsereMemoria(CreateOpcode(this.opcode,d,0,0,5));
+
+		AVR328.PC++;
+
+		return 0;
+	}else
+	{
+		return 1;
+	}	
+}
+AVR328.Commands.push(new classeteste());
+//*********************************************
+//***FIM INC ******************************
 //*********************************************
 
