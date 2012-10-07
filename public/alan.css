@@ -1,0 +1,42 @@
+ #todo {
+      -webkit-perspective: 800;
+      -moz-perspective: 800;
+      -webkit-perspective-origin: 50% 200px;
+      -moz-perspective-origin: 50% 200px;
+    }
+     #cubo {
+      position: relative;
+      margin: auto;
+      height: 400px;
+      width: 800px;
+      -webkit-transition: -webkit-transform 1s ease-in-out;
+      -moz-transition: transform 1s ease-in-out;
+      -webkit-transform-style: preserve-3d;
+      -moz-transform-style: preserve-3d;
+      -webkit-transform: rotateY(0deg);
+      -moz-transform: rotateY(0deg);
+      
+    }
+    .face {
+      position: absolute;
+      padding: 20px;
+      background-color: rgba(255, 255, 255, 0);
+    }
+     #cubo .um  {
+     -webkit-transition: all 1s ease-out;
+     -moz-transition: all 1s ease-out;
+     -webkit-transform: translateZ(0px);
+     -moz-transform: translateZ(0px);
+    }
+
+    #cubo .dois {
+       height:600px;
+       width:900px;
+       opacity:0;
+       -webkit-transition: all 1s ease-out;
+       -moz-transition: all 1s ease-out;
+      -webkit-transform: rotateX(90deg) translateZ(100px) translateY(100px) ;
+      -moz-transform: rotateX(90deg) translateZ(100px) translateY(100px) ;
+    }
+
+   
