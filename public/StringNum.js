@@ -94,7 +94,8 @@ function TrimAll(str){return str.replace(/\s/g,'');}
 * Rd		= 2 <br />
 * KK com Rd = 3 <br />
 * [X-Z],Rd  = 4 <br />
-* Rd,[X-Z]  = 5 
+* Rd,[X-Z]  = 5 <br /> 
+* KK        = 6 
 * @return {boolean}
 */
 function ValidateInput(s,type)
@@ -103,7 +104,7 @@ function ValidateInput(s,type)
 	var RtoK = RegExp(/((R+(\d))|(R+(\d\d)))+,+((\d)|-(\d))/);
 	var R 	 = RegExp(/R+(\d)|R+(\d\d)/);
 	var KtoR = RegExp(/((\d)|(\d\d)|(\d\d\d)|(\d\d\d\d)|(\d\d\d\d\d))+,+((R+(\d))|(R+(\d\d)))/);
-
+    var K    = RegExp(/\d{1,}/); 
 	if(type == 0)
 		if(RtoR.test(s))
 			return true;
@@ -220,6 +221,9 @@ function ValidateInput(s,type)
 		
 		return true;
 	}
+	if(type == 6)
+	    if(K.test(s))
+			    return true;
 
 	return false;
 }
