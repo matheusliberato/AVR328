@@ -1,0 +1,42 @@
+body{
+  background:url(../img/alan_turing-bg.png);
+}
+
+#mural{
+  margin:auto;
+  margin-top:2%;
+  border-style: double;
+  border-width: 15px;
+  border-color: #d9b163;
+  padding: 5px;
+  width: 500px;
+  height: 600px;
+}
+
+#mural div{
+  width: 100px;
+  height: 100px;
+  float: left;
+}
+
+#div_texto
+{
+   background:url(img/bg_aux.png) 100% 100%;
+  position: absolute;
+  color: #160f01;
+  margin-left: 5%;
+  margin-top: 8%;
+  width: 37%;
+  height: 570px;
+  text-align: center;
+  font: bold 90% "Verdana", helvetica, arial, sans-serif;
+}
+
+#lock
+{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top:0;
+  left:0;
+}
