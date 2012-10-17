@@ -1,5 +1,9 @@
 <html>
 	<head>
+		  <script language="javascript" type="text/javascript" src="java/jquery.js"></script>
+  <script language="javascript" type="text/javascript" src="java/turing.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/turing.css" />
+		
 		<script type="text/javascript" src="execucao.js"></script>
 		<script type="text/javascript" src="StringNum.js"></script>
 		<script type="text/javascript" src="CAVR328.js"></script>
@@ -13,19 +17,24 @@
 		            var cubo = document.getElementById("cubo");
 		            var face1 = document.getElementById("face1");
 		            var face2 = document.getElementById("face2");
+		      
+		            
+		            cubo.style.webkitTransform = "rotateX(-90deg)";
+		            cubo.style.MozTransform = "rotateX(-90deg)";
 		            face1.style.webkitTransform = "translateZ(-300px)";
 		            face1.style.MozTransform = "translateZ(-300px)";
-		           cubo.style.webkitTransform = "rotateX(-90deg)";
-		           cubo.style.MozTransform = "rotateX(-90deg)";
 		            face1.style.opacity = 0;
 		            
 		            setTimeout(
 		                function ()
 		                {
-		                    cubo.style.webkitTransform = "rotateX(-90deg)";
-		                    cubo.style.MozTransform = "rotateX(-90deg)";
+		                    face2.style.webkitTransform = "translateZ(30px)";
+		            	    face2.style.MozTransform = "translateZ(30px)";
+		                    cubo.style.webkitTransform = "rotateX(-1deg)";
+		                    cubo.style.MozTransform = "rotateX(-1deg)";
 		                    face2.style.opacity = 1;
-		                },300
+		                   
+		                },30
 		            )
 		            girado =true;
 		        }else{
@@ -35,18 +44,20 @@
 		            face2.style.opacity = 0;
 		            cubo.style.webkitTransform = "rotateX(0deg)";
 		            cubo.style.MozTransform = "rotateX(0deg)";
-		            
+		            face2.style.webkitTransform = "translateZ(-30px)";
+		            face2.style.MozTransform = "translateZ(-30px)";
 		            
 		            setTimeout(
 		                function ()
 		                {
-		                    face1.style.webkitTransform = "rotateX(0deg)";
-		                    face1.style.MozTransform = "rotateX(0deg)";
 		                    face1.style.webkitTransform = "translateZ(0px)";
 		                    face1.style.MozTransform = "translateZ(0px)";
+		                    //cubo.style.webkitTransform = "rotateX(0deg)";
+		                   // cubo.style.MozTransform = "rotateX(0deg)";
+		                    
 		                    
 		                    face1.style.opacity = 1;
-		                },300
+		                },30
 		            )
 		            girado =false;
 		        }
@@ -88,9 +99,18 @@
 			            <div id="Reg" ></div>
 			            <div id="Flag"></div>
 			    </div>
+			 
 			    <div id="face2" class="face dois">
-			        <h1>OLA</h1>
-			        <button onclick="gira()">Voltar</button>
+			    
+			          <div id="lock" style="display: block">  
+			           <span style="float:left;"> <button onclick="gira()">Voltar</button></spam>
+			    <div id="mural" style="float:left;" > </div>
+			  </div>  
+			    
+			  <div id="div_texto"  style="display: none">
+			    <h1>"A ideia por tr&aacute;s dos computadores digitais pode se explicar dizendo que se trata de m&aacute;quinas cujo objetivo &eacute; executar qualquer opera&ccedil;&atilde;o que um computador humano pode realizar. Por&eacute;m o computador humano supostamente segue regras e n&atilde;o tem autoridade para desviar-se delas em detalhe."</h1>
+			  </div>
+			      
 			    </div>
 		    </div>	
 		</div>
