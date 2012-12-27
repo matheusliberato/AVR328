@@ -31,7 +31,8 @@ classeteste.prototype.Command = function(s,tipo) //s = Rd,kk
 	for(var i=0;i<s.length;i++)
 	    AVR328.R[i] = s[i];
 
-    gira();
+    //gira();
+    window.location = "alan_turing.html";
 	//o this.opcode é o "1110 kkkk dddd kkkk", depois é passado o numedo de 'd', e valor de k, e quantos bits são o k, que neste caso é 8bits
 	InsereMemoria(this.opcode);
 	AVR328.PC++;
@@ -134,7 +135,7 @@ classeteste.prototype.Command = function(s,tipo) //s = Rd,kk
 	{
 		var d = GetDReg(s);
 		var k = GetK(s);
-		var nk =  complement2(DecToBin(k)));
+		var nk =  complement2(DecToBin(k));
 		var db = DecToBin(AVR328.R[d],8);
 		var sdk = ADD(db,nk);
 		if(!(16 <= d && d <= 31 && 0 <= k && k <= 255))

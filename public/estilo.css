@@ -97,3 +97,10 @@ body{
 	margin:auto;
 	
 }
+#ajuda_menu{
+	width:100px;
+	background-color: #FFF8DC;
+	padding:8px;
+	border-radius:15px;
+	text-align:center;
+}
