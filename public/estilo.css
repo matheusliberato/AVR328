@@ -98,6 +98,8 @@ body{
 	
 }
 #ajuda_menu{
+	position:fixed;
+	top:0;
 	width:100px;
 	background-color: #FFF8DC;
 	padding:8px;

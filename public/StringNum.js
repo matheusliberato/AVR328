@@ -585,3 +585,109 @@ function OR(s)
 	//Atribui o valor do .E. no reg[d].
 	AVR328.R[d] = ns;
 }
+
+function ADD(op1,op2)
+ {
+	var result = "";
+	var ult;
+	if(typeof(op1) != "string")
+		op1=op1.toString();
+	if(typeof(op2) != "string")
+		op2=op2.toString();
+	if(op1.length > op2.length)
+	{
+		var x = op2.length - 8;
+		for(var i = 0; i < x; i++)
+		{
+			op2 = "0" + op2;
+		}
+	}
+	else if(op1.length < op2.length)
+	{
+		var x = op1.length - 8;
+		for(var i = 0; i < x; i++)
+		{
+			op1 = "0" + op1;
+		}
+	}
+	ult = op1.length;		
+	
+	AVR328.C = 0;// não há emprestimo no inicio
+	for(var i = ult-1; i >= 0;i--)
+	{
+		var j = parseInt(op1[i]);
+		var x = parseInt(op2[i]);
+		if((j-AVR328.C) < x)
+		{
+			result += '1';
+			AVR328.C = 1;
+		}else
+		{
+			var r = AVR328.C - j - x;
+			result += r;
+			AVR328.C = 0;
+		}
+		
+		
+	}
+	result = Reverse(result);
+	return result;
+
+}
+
+/**
+* Subtrai dois numeros binarios. (subtração binaria)
+* @param {string} op1 minuendo
+* @param {string} op2 subtraendo
+* @return {string}
+*/
+function SUB(op1,op2)
+{
+	var result = "";
+	var ult;
+	if(typeof(op1) != "string")
+		op1=op1.toString();
+	if(typeof(op2) != "string")
+		op2=op2.toString();
+	if(op1.length > op2.length)
+	{
+		var x = op2.length - 8;
+		for(var i = 0; i < x; i++)
+		{
+			op2 = "0" + op2;
+		}
+	}
+	else if(op1.length < op2.length)
+	{
+		var x = op1.length - 8;
+		for(var i = 0; i < x; i++)
+		{
+			op1 = "0" + op1;
+		}
+	}
+	ult = op1.length;		
+
+	AVR328.C = 0;// não há emprestimo no inicio
+	for(var i = ult-1; i >= 0;i--)
+	{
+		var j = parseInt(op1[i]);
+		var x = parseInt(op2[i]);
+		if((j-AVR328.C) < x)
+		{
+			result += '1';
+			AVR328.C = 1;
+		}else
+		{
+			var r = j - x - AVR328.C;
+			result += r;
+			AVR328.C = 0;
+		}
+	
+	
+	}
+	result = Reverse(result);
+	return result;
+
+}
+
+
