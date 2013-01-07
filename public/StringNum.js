@@ -348,7 +348,7 @@ function negacao(item){
 		op2=op2.toString();
 	if(op1.length > op2.length)
 	{
-		var x = op1.length - op2.length;
+		var x = op2.length - 8;
 		for(var i = 0; i < x; i++)
 		{
 			op2 = "0" + op2;
@@ -356,13 +356,12 @@ function negacao(item){
 	}
 	else if(op1.length < op2.length)
 	{
-		var x = op2.length - op1.length;
+		var x = op1.length - 8;
 		for(var i = 0; i < x; i++)
 		{
 			op1 = "0" + op1;
 		}
 	}
-	
 	ult = op1.length;		
 	
 	for(var i = ult-1; i >= 0;i--)
@@ -397,7 +396,7 @@ function negacao(item){
 function complement2(str){
 	
 	var str = negacao(str);
-	str1 = ADD(str,"1");
+	str1 = ADD(str,DecToBin(1));
 	if(AVR328.C == 1)
 		AVR328.V = 1;
 	else
