@@ -1155,6 +1155,37 @@ classeteste.prototype.Command = function(s,tipo) //s = Rd,Rd
 }
 AVR328.Commands.push(new classeteste());
 //*********************************************
-//*******FIM SUBI ******************************
+//*******FIM SUBI *****************************
+//*********************************************
+
+//*********************************************
+//***Comando OR ******************************
+//*********************************************
+var classeteste = function()
+{
+	this.asm = "OR";
+	this.opcode="0010 10rd dddd rrrr"; //tudo em caixa baixa!
+}
+classeteste.prototype.Command = function(s,tipo) //s = Rd,Rd
+{
+	if (ValidateInput(s,_R_R)) // Valida os parametros do comando
+	{
+		var d = GetDReg(s);
+		var d2 = GetDReg2(s);
+		if(!OR(s))
+			return 1;
+		InsereMemoria(CreateOpcode(this.opcode,d2,0,0,d2,5,5));
+
+		AVR328.PC++;
+
+		return 0;
+	}else
+	{
+		return 1;
+	}	
+}
+AVR328.Commands.push(new classeteste());
+//*********************************************
+//*******FIM SUBI *****************************
 //*********************************************
 

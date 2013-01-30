@@ -577,12 +577,12 @@ function OR(s)
 	 */
 	 
 	//Coloca os valores de reg[d] e reg[r] nas variaveis.
-	var rd = AVR328.R[d];
-	var rr = AVR328.R[r];
+	var rd = DecToBin(AVR328.R[GetDReg(s)]);
+	var rr = DecToBin(AVR328.R[GetDReg2(s)]);
 	//
 	var ns = "";
 	
-	for(var i = 0; i < AVR328.R[d].length; i++)
+	for(var i = 0; i < 8; i++)
 	{
 		if(Boolean(parseInt(rd[i])) || Boolean(parseInt(rr[i])))
 			ns += "1";
@@ -591,7 +591,10 @@ function OR(s)
 	}
 	
 	//Atribui o valor do .E. no reg[d].
-	AVR328.R[d] = ns;
+	AVR328.R[d] = BinToDec(ns);
+	AfetaFlag(DecToBin(AVR328.R[d]));
+	
+	return true;
 }
 
 /**
