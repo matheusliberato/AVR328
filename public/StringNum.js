@@ -98,6 +98,14 @@ function TrimAll(str){return str.replace(/\s/g,'');}
 * KK        = 6 
 * @return {boolean}
 */
+//constantes da função ValidateInput
+var _R_R = 0;
+var _R_K = 1;
+var _R   = 2;
+var _K_R = 3;
+var _XYZ_R = 4;
+var _R_XYZ = 5;
+
 function ValidateInput(s,type)
 {
 	var RtoR = RegExp(/((R+(\d))|(R+(\d\d)))+,+(R+(\d)|R+(\d\d))/);
