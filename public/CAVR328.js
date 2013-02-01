@@ -1172,9 +1172,13 @@ classeteste.prototype.Command = function(s,tipo) //s = Rd,Rd
 	{
 		var d = GetDReg(s);
 		var d2 = GetDReg2(s);
-		if(!OR(s))
+		if(d < 0 || d > 31 || d2 < 0 || d2 > 31)
 			return 1;
-		InsereMemoria(CreateOpcode(this.opcode,d2,0,0,d2,5,5));
+			
+		AVR328.R[d] = BinToDec(OR(DecToBin(AVR328.R[d]),DecToBin(AVR328.R[d2])));	
+		AVR328.V = 0;
+		AfetaFlag(DecToBin(AVR328.R[d]));
+		InsereMemoria(CreateOpcode(this.opcode,d,0,0,d2,5,5));
 
 		AVR328.PC++;
 
@@ -1186,6 +1190,111 @@ classeteste.prototype.Command = function(s,tipo) //s = Rd,Rd
 }
 AVR328.Commands.push(new classeteste());
 //*********************************************
-//*******FIM SUBI *****************************
+//*******FIM OR *****************************
+//*********************************************
+
+//*********************************************
+//***Comando ORI ******************************
+//*********************************************
+var classeteste = function()
+{
+	this.asm = "ORI";
+	this.opcode="0110 kkkk dddd kkkk"; //tudo em caixa baixa!
+}
+classeteste.prototype.Command = function(s,tipo) //s = Rd,Rd
+{
+	if (ValidateInput(s,_R_K)) // Valida os parametros do comando
+	{
+		var d = GetDReg(s);
+		var k = GetK(s);
+		if(d < 16 || d > 31 || k < 0 || k > 255)
+			return 1;
+			
+		AVR328.R[d] = BinToDec(OR(DecToBin(AVR328.R[d]),DecToBin(k)));	
+		AVR328.V = 0;
+		AfetaFlag(DecToBin(AVR328.R[d]));
+		InsereMemoria(CreateOpcode(this.opcode,d,k,8,0,4));
+
+		AVR328.PC++;
+
+		return 0;
+	}else
+	{
+		return 1;
+	}	
+}
+AVR328.Commands.push(new classeteste());
+//*********************************************
+//*******FIM ORI *****************************
+//*********************************************
+
+//*********************************************
+//***Comando AND ******************************
+//*********************************************
+var classeteste = function()
+{
+	this.asm = "AND";
+	this.opcode="0010 00rd dddd rrrr"; //tudo em caixa baixa!
+}
+classeteste.prototype.Command = function(s,tipo) //s = Rd,Rd
+{
+	if (ValidateInput(s,_R_R)) // Valida os parametros do comando
+	{
+		var d = GetDReg(s);
+		var d2 = GetDReg2(s);
+		if(d < 0 || d > 31 || d2 < 0 || d2 > 31)
+			return 1;
+			
+		AVR328.R[d] = BinToDec(AND(DecToBin(AVR328.R[d]),DecToBin(AVR328.R[d2])));	
+		AVR328.V = 0;
+		AfetaFlag(DecToBin(AVR328.R[d]));
+		InsereMemoria(CreateOpcode(this.opcode,d,0,0,d2,5,5));
+
+		AVR328.PC++;
+
+		return 0;
+	}else
+	{
+		return 1;
+	}	
+}
+AVR328.Commands.push(new classeteste());
+//*********************************************
+//*******FIM AND *****************************
+//*********************************************
+
+//*********************************************
+//***Comando ANDI ******************************
+//*********************************************
+var classeteste = function()
+{
+	this.asm = "ANDI";
+	this.opcode="0111 kkkk dddd kkkk"; //tudo em caixa baixa!
+}
+classeteste.prototype.Command = function(s,tipo) //s = Rd,Rd
+{
+	if (ValidateInput(s,_R_K)) // Valida os parametros do comando
+	{
+		var d = GetDReg(s);
+		var k = GetK(s);
+		if(d < 16 || d > 31 || k < 0 || k > 255)
+			return 1;
+			
+		AVR328.R[d] = BinToDec(AND(DecToBin(AVR328.R[d]),DecToBin(k)));	
+		AVR328.V = 0;
+		AfetaFlag(DecToBin(AVR328.R[d]));
+		InsereMemoria(CreateOpcode(this.opcode,d,k,8,0,4));
+
+		AVR328.PC++;
+
+		return 0;
+	}else
+	{
+		return 1;
+	}	
+}
+AVR328.Commands.push(new classeteste());
+//*********************************************
+//*******FIM ANDI *****************************
 //*********************************************
 

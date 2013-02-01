@@ -517,17 +517,23 @@ function AfetaFlag(sdk)
 	if(sdk[0] == '1') AVR328.N = 1; else AVR328.N = 0;
 	if(AVR328.N == 1 ^ AVR328.V == 1) AVR328.S = 1; else AVR328.S = 0;
 }	
-function OR(s)
+/**
+* Realiza a operação .OU.  
+* @param {string} op1 1o. valor (binario) 
+* @param {string} op2 2o. valor (binario)
+* @return {string} (binario)
+*/
+function OR(op1, op2)
 {
 	//Converte para maiusculo e retira o comando da string incluindo os espacos.
-	s = s.toUpperCase(); s = s.replace("OR",""); s = TrimAll(s);
+	//s = s.toUpperCase(); s = s.replace("OR",""); s = TrimAll(s);
 	
 	//Exp para validar a entrada.
 	// exp1 = R[\d],R[\d]
 	// exp2 = R[\d],R[\d\d]
 	// exp3 = R[\d\d],R[\d]
 	// exp4 = R[\d\d],R[\d\d]
-	var exp1 = RegExp(/((([r]|[R])+([\d]))+,+(([r]|[R])+([\d])))/);
+	/*var exp1 = RegExp(/((([r]|[R])+([\d]))+,+(([r]|[R])+([\d])))/);
 	var exp2 = RegExp(/((([r]|[R])+([\d]))+,+(([r]|[R])+([\d\d])))/);
 	var exp3 = RegExp(/[R]+[\d]+[\d]+,+[R]+([\d])$/);
 	var exp4 = RegExp(/[R]+[\d]+[\d]+,+[R]+([\d]+[\d])$/);
@@ -565,6 +571,7 @@ function OR(s)
 	}
 	else
 		return false;
+	*/	
 	
 	//Se chegou até aqui significa que a string foi informada corretamente.
 	
@@ -577,24 +584,43 @@ function OR(s)
 	 */
 	 
 	//Coloca os valores de reg[d] e reg[r] nas variaveis.
-	var rd = DecToBin(AVR328.R[GetDReg(s)]);
-	var rr = DecToBin(AVR328.R[GetDReg2(s)]);
+	//var rd = DecToBin(AVR328.R[GetDReg(s)]);
+	//var rr = DecToBin(AVR328.R[GetDReg2(s)]);
 	//
 	var ns = "";
 	
 	for(var i = 0; i < 8; i++)
 	{
-		if(Boolean(parseInt(rd[i])) || Boolean(parseInt(rr[i])))
+		if(Boolean(parseInt(op1[i])) || Boolean(parseInt(op2[i])))
 			ns += "1";
 		else
 			ns += "0";
 	}
 	
-	//Atribui o valor do .E. no reg[d].
-	AVR328.R[d] = BinToDec(ns);
-	AfetaFlag(DecToBin(AVR328.R[d]));
+	return ns;
 	
-	return true;
+}
+
+/**
+* Realiza a operação .E.  
+* @param {string} op1 1o. valor (binario) 
+* @param {string} op2 2o. valor (binario)
+* @return {string} (binario)
+*/
+function AND(op1, op2)
+{
+	var ns = "";
+	
+	for(var i = 0; i < 8; i++)
+	{
+		if(Boolean(parseInt(op1[i])) && Boolean(parseInt(op2[i])))
+			ns += "1";
+		else
+			ns += "0";
+	}
+	
+	return ns;
+	
 }
 
 /**
