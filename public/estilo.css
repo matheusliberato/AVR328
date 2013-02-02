@@ -1,6 +1,8 @@
 #todo{
-	width:900px;
 	margin:auto;
+	display:table;
+	overflow-x:scroll;
+	min-width:800px;
 }
 body{
 	background-color: #EEE;
@@ -14,13 +16,20 @@ body{
 }
 #console1{
 	float:left;
-	width:120px;
+	width:auto;
 	margin-left:6px;
+	display:table;
 }
 #console2{
 	position: relative;
-	width:800px;
+	width:auto;
 	height:50px;
+	float:left;
+}
+#console3{
+	float:left;
+	width:auto;
+	margin-left:6px;
 }
 #Reg,#Flag{
 	float:left;
@@ -28,8 +37,8 @@ body{
 	margin-left:6px;
 	padding:5px;
 	background-color: #FFF8DC;
-	font-family:Lucida Console;
-	font-size: 90%;
+	font-family:Verdana;
+	font-size: 70%;
 	border: 1px solid green;
 }
 #Flag{
@@ -41,17 +50,17 @@ body{
 	border:1px solid #0F7FF0;
 	padding:4px;
 	margin:3px;
-	font-size:100%;
+	font-size:80%;
 	text-align:center;
 	color:#0F7F7F;
 }
 .opcode{
 	background-color: #FFF8DC;
 	color:#00008B;
-	font-family:Lucida Console;
-	font-size:80%;
+	font-family:Verdana;
+	font-size:70%;
 	height:207px;
-	width: auto;
+	width:127px;
 	border:1px solid blue;
 	
 }
@@ -72,6 +81,7 @@ body{
 	color:#E00;
 	font-size:80%;
 	border:1px solid red;
+	width:100%;
 }
 #linha{
 	width:60px;
@@ -81,7 +91,7 @@ body{
 	float:left;
 	height:450px;
 	overflow:hidden;
-	font-family:Lucida Console;
+	font-family:Verdana;
 	font-size:80%;
 	margin-top:43px;
 	margin-right:3px;

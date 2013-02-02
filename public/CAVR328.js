@@ -1321,8 +1321,8 @@ classeteste.prototype.Command = function(s,tipo) //s = Rd,Rd
 		for(var i=0;i<AVR328.R[d];i++)
 			s = ADD(m,s);
 		
-		AVR328.R[0] = s.substr(3,4);
-		AVR328.R[1] = s.substr(0,4);
+		AVR328.R[0] = BinToDec(s.substr(3,4));
+		AVR328.R[1] = BinToDec(s.substr(0,4));
 		var dk = BinToDec(s);
 		if(dk == 0) AVR328.Z = 1; else AVR328.Z = 0;
 		//o this.opcode é o "1110 kkkk dddd kkkk", depois é passado o numedo de 'd', e valor de k, e quantos bits são o k, que neste caso é 8bits
