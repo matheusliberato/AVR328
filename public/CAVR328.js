@@ -144,7 +144,7 @@ classeteste.prototype.Command = function(s,tipo) //s = Rd,kk
 		    return 1;
 		AfetaFlag(sdk);
 		//o this.opcode é o "1110 kkkk dddd kkkk", depois é passado o numedo de 'd', e valor de k, e quantos bits são o k, que neste caso é 8bits
-		InsereMemoria(CreateOpcode(this.opcode,d,k,8));
+		InsereMemoria(CreateOpcode(this.opcode,d-16,k,8));
 
 		AVR328.PC++;
 
@@ -1143,7 +1143,7 @@ classeteste.prototype.Command = function(s,tipo) //s = Rd,Rd
 		
 		AVR328.R[d] = BinToDec(SUB(DecToBin(AVR328.R[d]),DecToBin(k)));
 		AfetaFlag(DecToBin(AVR328.R[d]));
-		InsereMemoria(CreateOpcode(this.opcode,d,k,8,0,4));
+		InsereMemoria(CreateOpcode(this.opcode,d-16,k,8,0,4));
 
 		AVR328.PC++;
 
@@ -1213,7 +1213,7 @@ classeteste.prototype.Command = function(s,tipo) //s = Rd,Rd
 		AVR328.R[d] = BinToDec(OR(DecToBin(AVR328.R[d]),DecToBin(k)));	
 		AVR328.V = 0;
 		AfetaFlag(DecToBin(AVR328.R[d]));
-		InsereMemoria(CreateOpcode(this.opcode,d,k,8,0,4));
+		InsereMemoria(CreateOpcode(this.opcode,d-16,k,8,0,4));
 
 		AVR328.PC++;
 
@@ -1283,7 +1283,7 @@ classeteste.prototype.Command = function(s,tipo) //s = Rd,Rd
 		AVR328.R[d] = BinToDec(AND(DecToBin(AVR328.R[d]),DecToBin(k)));	
 		AVR328.V = 0;
 		AfetaFlag(DecToBin(AVR328.R[d]));
-		InsereMemoria(CreateOpcode(this.opcode,d,k,8,0,4));
+		InsereMemoria(CreateOpcode(this.opcode,d-16,k,8,0,4));
 
 		AVR328.PC++;
 
@@ -1296,5 +1296,48 @@ classeteste.prototype.Command = function(s,tipo) //s = Rd,Rd
 AVR328.Commands.push(new classeteste());
 //*********************************************
 //*******FIM ANDI *****************************
+//*********************************************
+
+//*********************************************
+//***Comando MUL ******************************
+//*********************************************
+var classeteste = function()
+{
+	this.asm = "MUL";
+	this.opcode="1001 11rd dddd rrrr"; //tudo em caixa baixa!
+}
+classeteste.prototype.Command = function(s,tipo) //s = Rd,Rd
+{
+	if (ValidateInput(s,_R_R)) // Valida os parametros do comando
+	{
+		var d = GetDReg(s);
+		var d2 = GetDReg2(s);
+		
+		if(d < 0 || d > 31 || d2 < 0 || d2 > 31)
+			return 1;
+		
+		var s=DecToBin(0);
+		var m = DectoBin(AVR328.R[d2]);
+		for(var i=0;i<AVR328.R[d];i++)
+			s = ADD(m,s);
+		
+		AVR328.R[0] = s.substr(3,4);
+		AVR328.R[1] = s.substr(0,4);
+		var dk = BinToDec(s);
+		if(dk == 0) AVR328.Z = 1; else AVR328.Z = 0;
+		//o this.opcode é o "1110 kkkk dddd kkkk", depois é passado o numedo de 'd', e valor de k, e quantos bits são o k, que neste caso é 8bits
+		InsereMemoria(CreateOpcode(this.opcode,d,0,0,d2,5,5));
+
+		AVR328.PC++;
+
+		return 0;
+	}else
+	{
+		return 1;
+	}	
+}
+AVR328.Commands.push(new classeteste());
+//*********************************************
+//***FIM MUL ******************************
 //*********************************************
 

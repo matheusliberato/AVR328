@@ -121,11 +121,11 @@ function MostraMemoria()
 	var s = "";
 	for(var i=0;i<4096;i++)
 		if(i<16)
-			s += "0x00"+i.toString(16)+": "+MEMORIA[i]+'\n';
+			s += "0x00"+i.toString(16).toUpperCase()+": "+MEMORIA[i]+'\n';
 		else if(i>=16 && i<256)
-				s += "0x0"+i.toString(16)+": "+MEMORIA[i]+'\n';
+				s += "0x0"+i.toString(16).toUpperCase()+": "+MEMORIA[i]+'\n';
 			 else
-				s += "0x"+i.toString(16)+": "+MEMORIA[i]+'\n';
+				s += "0x"+i.toString(16).toUpperCase()+": "+MEMORIA[i]+'\n';
 			
 	ConsoleBin(s);
 }
@@ -139,11 +139,11 @@ function MostraMemoriaDados()
 	var s = "";
 	for(var i=0;i<4096;i++)
 		if(i<16)
-			s += "0x00"+i.toString(16)+": "+MEMORIA_DADOS[i]+'\n';
+			s += "0x00"+i.toString(16).toUpperCase()+": "+MEMORIA_DADOS[i]+'\n';
 		else if(i>=16 && i<256)
-				s += "0x0"+i.toString(16)+": "+MEMORIA_DADOS[i]+'\n';
+				s += "0x0"+i.toString(16).toUpperCase()+": "+MEMORIA_DADOS[i]+'\n';
 			 else
-				s += "0x"+i.toString(16)+": "+MEMORIA_DADOS[i]+'\n';
+				s += "0x"+i.toString(16).toUpperCase()+": "+MEMORIA_DADOS[i]+'\n';
 			
 	ConsoleBinDados(s);
 }
