@@ -11,6 +11,7 @@ CAVR328 = function (AVR328)
 	this.T = 0;
 	this.I = 0;
 	this.PC = 0;
+	this.SP = 0;
 }
 var AVR328 = new CAVR328;
 
@@ -1316,13 +1317,13 @@ classeteste.prototype.Command = function(s,tipo) //s = Rd,Rd
 		if(d < 0 || d > 31 || d2 < 0 || d2 > 31)
 			return 1;
 		
-		var s=DecToBin(0);
-		var m = DectoBin(AVR328.R[d2]);
+		var s=DecToBin('0',16);
+		var m = DecToBin(AVR328.R[d2]);
 		for(var i=0;i<AVR328.R[d];i++)
-			s = ADD(m,s);
+			s = ADD(m,s,false,16);
 		
-		AVR328.R[0] = BinToDec(s.substr(3,4));
-		AVR328.R[1] = BinToDec(s.substr(0,4));
+		AVR328.R[0] = BinToDec(s.substr(8,8));
+		AVR328.R[1] = BinToDec(s.substr(0,8));
 		var dk = BinToDec(s);
 		if(dk == 0) AVR328.Z = 1; else AVR328.Z = 0;
 		//o this.opcode é o "1110 kkkk dddd kkkk", depois é passado o numedo de 'd', e valor de k, e quantos bits são o k, que neste caso é 8bits

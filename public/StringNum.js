@@ -337,37 +337,40 @@ function negacao(item){
 		}
 		return(str);
 }
-/*
- *
- *
- *
- *
+/**
+ *Soma dois binários
+ *@param {string} op1: operador 1
+ *@param {string} op2: operador 2
+ *@param {string} c: usa carry inicial
+ *@param {string} nd: numero de bits de retorno, default: 8
  *
  */
- function ADD(op1,op2,c)
+ function ADD(op1,op2,c,nd)
  {
 	var result = "";
 	var ult;
+	if(!nd)
+		nd = 8;
 	if(!c)
 		AVR328.C = 0; //Seta o Bit de status do Carry como 0.
 	if(typeof(op1) != "string")
 		op1=op1.toString();
 	if(typeof(op2) != "string")
 		op2=op2.toString();
-	if(op1.length > op2.length)
+	if(op1.length < nd)
 	{
-		var x = op2.length - 8;
-		for(var i = 0; i < x; i++)
-		{
-			op2 = "0" + op2;
-		}
-	}
-	else if(op1.length < op2.length)
-	{
-		var x = op1.length - 8;
+		var x = nd - op1.length ;
 		for(var i = 0; i < x; i++)
 		{
 			op1 = "0" + op1;
+		}
+	}
+	else if(op2.length < nd)
+	{
+		var x = nd - op2.length;
+		for(var i = 0; i < x; i++)
+		{
+			op2 = "0" + op2;
 		}
 	}
 	ult = op1.length;		
