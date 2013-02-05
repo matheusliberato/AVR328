@@ -98,6 +98,14 @@ function TrimAll(str){return str.replace(/\s/g,'');}
 * KK        = 6 
 * @return {boolean}
 */
+//constantes da função ValidateInput
+var _R_R = 0;
+var _R_K = 1;
+var _R   = 2;
+var _K_R = 3;
+var _XYZ_R = 4;
+var _R_XYZ = 5;
+
 function ValidateInput(s,type)
 {
 	var RtoR = RegExp(/((R+(\d))|(R+(\d\d)))+,+(R+(\d)|R+(\d\d))/);
@@ -329,37 +337,40 @@ function negacao(item){
 		}
 		return(str);
 }
-/*
- *
- *
- *
- *
+/**
+ *Soma dois binários
+ *@param {string} op1: operador 1
+ *@param {string} op2: operador 2
+ *@param {string} c: usa carry inicial
+ *@param {string} nd: numero de bits de retorno, default: 8
  *
  */
- function ADD(op1,op2,c)
+ function ADD(op1,op2,c,nd)
  {
 	var result = "";
 	var ult;
+	if(!nd)
+		nd = 8;
 	if(!c)
 		AVR328.C = 0; //Seta o Bit de status do Carry como 0.
 	if(typeof(op1) != "string")
 		op1=op1.toString();
 	if(typeof(op2) != "string")
 		op2=op2.toString();
-	if(op1.length > op2.length)
+	if(op1.length < nd)
 	{
-		var x = op2.length - 8;
-		for(var i = 0; i < x; i++)
-		{
-			op2 = "0" + op2;
-		}
-	}
-	else if(op1.length < op2.length)
-	{
-		var x = op1.length - 8;
+		var x = nd - op1.length ;
 		for(var i = 0; i < x; i++)
 		{
 			op1 = "0" + op1;
+		}
+	}
+	else if(op2.length < nd)
+	{
+		var x = nd - op2.length;
+		for(var i = 0; i < x; i++)
+		{
+			op2 = "0" + op2;
 		}
 	}
 	ult = op1.length;		
@@ -509,17 +520,23 @@ function AfetaFlag(sdk)
 	if(sdk[0] == '1') AVR328.N = 1; else AVR328.N = 0;
 	if(AVR328.N == 1 ^ AVR328.V == 1) AVR328.S = 1; else AVR328.S = 0;
 }	
-function OR(s)
+/**
+* Realiza a operação .OU.  
+* @param {string} op1 1o. valor (binario) 
+* @param {string} op2 2o. valor (binario)
+* @return {string} (binario)
+*/
+function OR(op1, op2)
 {
 	//Converte para maiusculo e retira o comando da string incluindo os espacos.
-	s = s.toUpperCase(); s = s.replace("OR",""); s = TrimAll(s);
+	//s = s.toUpperCase(); s = s.replace("OR",""); s = TrimAll(s);
 	
 	//Exp para validar a entrada.
 	// exp1 = R[\d],R[\d]
 	// exp2 = R[\d],R[\d\d]
 	// exp3 = R[\d\d],R[\d]
 	// exp4 = R[\d\d],R[\d\d]
-	var exp1 = RegExp(/((([r]|[R])+([\d]))+,+(([r]|[R])+([\d])))/);
+	/*var exp1 = RegExp(/((([r]|[R])+([\d]))+,+(([r]|[R])+([\d])))/);
 	var exp2 = RegExp(/((([r]|[R])+([\d]))+,+(([r]|[R])+([\d\d])))/);
 	var exp3 = RegExp(/[R]+[\d]+[\d]+,+[R]+([\d])$/);
 	var exp4 = RegExp(/[R]+[\d]+[\d]+,+[R]+([\d]+[\d])$/);
@@ -557,6 +574,7 @@ function OR(s)
 	}
 	else
 		return false;
+	*/	
 	
 	//Se chegou até aqui significa que a string foi informada corretamente.
 	
@@ -569,21 +587,43 @@ function OR(s)
 	 */
 	 
 	//Coloca os valores de reg[d] e reg[r] nas variaveis.
-	var rd = AVR328.R[d];
-	var rr = AVR328.R[r];
+	//var rd = DecToBin(AVR328.R[GetDReg(s)]);
+	//var rr = DecToBin(AVR328.R[GetDReg2(s)]);
 	//
 	var ns = "";
 	
-	for(var i = 0; i < AVR328.R[d].length; i++)
+	for(var i = 0; i < 8; i++)
 	{
-		if(Boolean(parseInt(rd[i])) || Boolean(parseInt(rr[i])))
+		if(Boolean(parseInt(op1[i])) || Boolean(parseInt(op2[i])))
 			ns += "1";
 		else
 			ns += "0";
 	}
 	
-	//Atribui o valor do .E. no reg[d].
-	AVR328.R[d] = ns;
+	return ns;
+	
+}
+
+/**
+* Realiza a operação .E.  
+* @param {string} op1 1o. valor (binario) 
+* @param {string} op2 2o. valor (binario)
+* @return {string} (binario)
+*/
+function AND(op1, op2)
+{
+	var ns = "";
+	
+	for(var i = 0; i < 8; i++)
+	{
+		if(Boolean(parseInt(op1[i])) && Boolean(parseInt(op2[i])))
+			ns += "1";
+		else
+			ns += "0";
+	}
+	
+	return ns;
+	
 }
 
 /**

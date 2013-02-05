@@ -121,11 +121,11 @@ function MostraMemoria()
 	var s = "";
 	for(var i=0;i<4096;i++)
 		if(i<16)
-			s += "0x00"+i.toString(16)+": "+MEMORIA[i]+'\n';
+			s += "0x00"+i.toString(16).toUpperCase()+": "+MEMORIA[i]+'\n';
 		else if(i>=16 && i<256)
-				s += "0x0"+i.toString(16)+": "+MEMORIA[i]+'\n';
+				s += "0x0"+i.toString(16).toUpperCase()+": "+MEMORIA[i]+'\n';
 			 else
-				s += "0x"+i.toString(16)+": "+MEMORIA[i]+'\n';
+				s += "0x"+i.toString(16).toUpperCase()+": "+MEMORIA[i]+'\n';
 			
 	ConsoleBin(s);
 }
@@ -139,11 +139,11 @@ function MostraMemoriaDados()
 	var s = "";
 	for(var i=0;i<4096;i++)
 		if(i<16)
-			s += "0x00"+i.toString(16)+": "+MEMORIA_DADOS[i]+'\n';
+			s += "0x00"+i.toString(16).toUpperCase()+": "+MEMORIA_DADOS[i]+'\n';
 		else if(i>=16 && i<256)
-				s += "0x0"+i.toString(16)+": "+MEMORIA_DADOS[i]+'\n';
+				s += "0x0"+i.toString(16).toUpperCase()+": "+MEMORIA_DADOS[i]+'\n';
 			 else
-				s += "0x"+i.toString(16)+": "+MEMORIA_DADOS[i]+'\n';
+				s += "0x"+i.toString(16).toUpperCase()+": "+MEMORIA_DADOS[i]+'\n';
 			
 	ConsoleBinDados(s);
 }
@@ -174,12 +174,12 @@ function inicializa(tipo)
 	if(MONTAGEM_OK)
 	{
 		document.getElementById("btn_Executa").disabled = false;
-		document.getElementById("btn_Frente").disabled = false;
+		document.getElementById("btn_Frente").disabled = true;
 	}
 	else
 	{
 		document.getElementById("btn_Executa").disabled = true;
-		document.getElementById("btn_Frente").disabled = true;
+		document.getElementById("btn_Frente").disabled = false;
 	}
 }
 /**
@@ -294,6 +294,12 @@ function Montar()
 	}
 	
 	inicializa(1); // Limpa o estado do processador, pois esta função é apenas para gerar os opcodes.
+	if(MONTAGEM_OK && LINHA != 1)
+	{
+		document.getElementById("CODE").disabled = true;
+		document.getElementById("btn_Frente").disabled = false;
+	}else
+		document.getElementById("btn_Frente").disabled = true;
 	
 }		
 /**
@@ -355,6 +361,7 @@ function Executar()
 			
 	}
 	EXECUTAR = false;
+	document.getElementById("CODE").disabled = false;
 }		
 /**
 *Executa o código linha por linha
@@ -412,7 +419,10 @@ function Passo()
 	
 	}
 	if((AVR328.PC) >= CODE.length)
+	{
 		document.getElementById("btn_Frente").disabled = true;
+		document.getElementById("CODE").disabled = false;
+	}
 	
 	document.getElementById("linha").value = "Linha: " +AVR328.PC;
 	linhas(AVR328.PC);
